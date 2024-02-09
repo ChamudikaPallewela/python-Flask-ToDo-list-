@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task Management System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light gray background */
+}
 
+.container {
+    margin-top: 50px;
+    background-color: #fff; /* White container background */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    padding: 30px;
+}
+
+h1 {
+    color: #007bff; /* Blue heading color */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+#add-task-btn {
+    background-color: #28a745; /* Green button */
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+#add-task-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.list-group-item {
+    transition: background-color 0.2s ease;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff; /* White background for tasks */
+    padding: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+}
+
+.list-group-item:hover {
+    background-color: #f5f5f5; /* Light gray on hover */
+}
+
+.btn-primary, .btn-danger {
+    padding: 8px 16px; /* Increase button padding */
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Blue button */
+    transition: background-color 0.2s ease;
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Red button */
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover, .btn-danger:hover {
+    opacity: 0.9; /* Reduce opacity on hover */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+}
+
+label {
+    font-weight: bold;
+    color: #555; /* Dark gray label color */
+}
+
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mb-5">Task Management System</h1>
+      <form>
+        <div class="form-group">
+          <label for="task-name">Task Name</label>
+          <input type="text" class="form-control" id="task-name" placeholder="Enter task name">
+        </div>
+        <div class="form-group">
+          <label for="task-description">Task Description</label>
+          <textarea class="form-control" id="task-description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="due-date">Due Date</label>
+          <input type="date" class="form-control" id="due-date">
+        </div>
+        <button type="button" class="btn btn-primary" id="add-task-btn">Add Task</button>
+      </form>
+      <ul class="list-group mt-3" id="task-list">
+      </ul>
+    </div>
+    <script>
+        document.getElementById('add-task-btn').addEventListener('click', function() {
+          var taskName = document.getElementById('task-name').value;
+          var taskDescription = document.getElementById('task-description').value;
+          var dueDate = document.getElementById('due-date').value;
+      
+          if (!taskName || !taskDescription || !dueDate) {
+            alert('Please fill in all fields');
+            return;
+          }
+      
+          var taskList = document.getElementById('task-list');
+          var newTask = document.createElement('li');
+          newTask.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+      
+          var taskNameSpan = document.createElement('span');
+          taskNameSpan.textContent = taskName;
+      
+          var taskDescriptionSpan = document.createElement('span');
+          taskDescriptionSpan.textContent = taskDescription;
+      
+          var dueDateSpan = document.createElement('span');
+          dueDateSpan.textContent = dueDate;
+      
+          var editTaskBtn = document.createElement('button');
+          editTaskBtn.classList.add('btn', 'btn-primary', 'mx-2');
+          editTaskBtn.textContent = 'Edit';
+          editTaskBtn.addEventListener('click', function() {
+            var newTaskName = prompt('Enter the new task name:');
+            var newTaskDescription = prompt('Enter the new task description:');
+            var newDueDate = prompt('Enter the new due date:');
+      
+            if (!newTaskName || !newTaskDescription || !newDueDate) {
+              alert('Please fill in all fields');
+              return;
+            }
+      
+            taskNameSpan.textContent = newTaskName;
+            taskDescriptionSpan.textContent = newTaskDescription;
+            dueDateSpan.textContent = newDueDate;
+          });
+      
+          var deleteTaskBtn = document.createElement('button');
+          deleteTaskBtn.classList.add('btn', 'btn-danger');
+          deleteTaskBtn.textContent = 'Delete';
+          deleteTaskBtn.addEventListener('click', function() {
+            newTask.remove();
+          });
+      
+          newTask.appendChild(taskNameSpan);
+          newTask.appendChild(taskDescriptionSpan);
+          newTask.appendChild(dueDateSpan);
+          newTask.appendChild(editTaskBtn);
+          newTask.appendChild(deleteTaskBtn);
+          taskList.appendChild(newTask);
+        });
+      </script>
+      
+  </body>
+</html>
